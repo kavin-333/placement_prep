@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router';
+import { createHashRouter, Navigate } from 'react-router';
 import { LoginPage } from './components/LoginPage';
 import { DomainSelection } from './components/DomainSelection';
 import { TopicSelection } from './components/TopicSelection';
@@ -8,16 +8,15 @@ import { ResultsPage } from './components/ResultsPage';
 // Protected route wrapper
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const user = localStorage.getItem('quizUser');
-  
+
   if (!user) {
-    window.location.href = '/login';
-    return null;
+    return <Navigate to="/login" replace />;
   }
-  
+
   return <>{children}</>;
 }
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     path: '/login',
     element: <LoginPage />
